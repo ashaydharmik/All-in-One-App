@@ -96,7 +96,7 @@ const validation=(data)=>{
                   {error && <div className="errorMsg">{error.username}</div>}
                   <input type="email" placeholder="Email" name="email" value={formData.email} onChange={handleChange}/>
                   {error && <div className="errorMsg">{error.email}</div>}
-                  <input type="phone" placeholder="Mobile" name="mobile" value={formData.mobile} onChange={handleChange}/>
+                  <input type="tel" placeholder="Mobile" name="mobile" value={formData.mobile} onChange={handleChange}/>
                   {error && <div className="errorMsg">{error.mobile}</div>}
                 </div>
                 <div className="checkbox">
