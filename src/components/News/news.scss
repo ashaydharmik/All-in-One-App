@@ -1,0 +1,99 @@
+.main-container {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .sub-container {
+    width: 95%;
+    height: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .profile-container {
+      width: 65%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+      .profile-box {
+        width: 100%;
+        height: 65%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background: #5746ea;
+        border-radius: 10px;
+        .image-box {
+          width: 30%;
+          height: 95%;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .content-box {
+          width: 60%;
+          height: 80%;
+          display: flex;
+          justify-content: space-around;
+          flex-direction: column;
+          .profile-info {
+            width: 100%;
+            height: 55%;
+            p {
+              color: white;
+              font-size: 3rem;
+              font-weight: 500;
+            }
+            .username {
+              font-size: 3.5rem;
+              font-weight: bold;
+              text-transform: uppercase;
+            }
+          }
+          .movie-info {
+            width: 100%;
+            height: 33%;
+            display: grid;
+            grid-template-columns: repeat(2, 0fr);
+            gap: 10px;
+            padding: 0 3rem 3rem 0;
+            overflow: hidden;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+         
+            //to design scrollbar
+
+
+            button {
+              width: 16rem;
+              height: 4rem;
+              border-radius: 30px;
+              border: none;
+              background: #9f94ff;
+              color: white;
+              font-size: 2rem;
+            }
+          }
+        }
+      }
+      .temp-box {
+        height: 30%;
+        width: 100%;
+        background: #ff4ade;
+        border-radius: 10px;
+      }
+    }
+    .news-container {
+      width: 30%;
+      height: 100%;
+      background: #101744;
+      border-radius: 10px;
+    }
+  }
+}
+
+

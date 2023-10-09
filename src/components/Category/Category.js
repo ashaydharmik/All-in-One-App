@@ -30,7 +30,12 @@ const Category = () => {
   const handleNextButton = () => {
     if (selectedCategory.length >= 3) {
       setShowWarning(false);
-      navigate("/details");
+      const selectedCardTitle = selectedCategory.map((categoryId)=>{
+        const selectedCard = CategoryData.find((item)=> item.id === categoryId)
+        return selectedCard ? selectedCard.title : "";
+      })
+      localStorage.setItem("MovieDetails", JSON.stringify(selectedCardTitle));
+      navigate("/news");
     } else {
       setShowWarning(true);
     }
