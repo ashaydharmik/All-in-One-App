@@ -1,0 +1,116 @@
+import React, { useState } from "react";
+import "./styles.css";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
+
+export default function App() {
+  const [hours, setHours] = useState(0);
+  const [min, setMin] = useState(0);
+  const [sec, setSec] = useState(0);
+  const [timerKey, setTimerKey] = useState(0);
+  const [timerStarted, setTimerStarted] = useState(false);
+  const [stopTimer, setStopTimer] = useState(false);
+
+  const handleIncrement = (setter, max) => {
+    setter((prevValue) => {
+      if (prevValue < max) {
+        return prevValue + 1;
+      }
+      return prevValue;
+    });
+  };
+
+  const handleDecrement = (setter, min) => {
+    setter((prevValue) => {
+      if (prevValue > min) {
+        return prevValue - 1;
+      }
+      return prevValue;
+    });
+  };
+
+  const resetTimer = () => {
+    setHours(0);
+    setMin(0);
+    setSec(0);
+    setTimerStarted(false);
+    setStopTimer(false);
+    setTimerKey((prevKey) => prevKey + 1);
+  };
+
+  // Calculate the total duration in seconds
+  const totalDuration = hours * 3600 + min * 60 + sec;
+
+  const startTimer = () => {
+    if (totalDuration > 0) {
+      setTimerKey((prevKey) => prevKey + 1);
+      setTimerStarted(true);
+      setStopTimer(true);
+    }
+  };
+
+  return (
+    <>
+      <div className="stop-watch">
+        <div className="hours">
+          <p>Hours</p>
+          <button onClick={() => handleIncrement(setHours, 24)}>Increase</button>
+          <div style={{ textAlign: "center" }}>
+            <p>{`${hours < 10 ? "0" : ""}${hours}`}</p>
+          </div>
+          <button onClick={() => handleDecrement(setHours, 0)}>Decrease</button>
+        </div>
+        <div className="min">
+          <p>Minutes</p>
+          <button onClick={() => handleIncrement(setMin, 60)}>Increase</button>
+          <div style={{ textAlign: "center" }}>
+            <p>{`${min < 10 ? "0" : ""}${min}`}</p>
+          </div>
+          <button onClick={() => handleDecrement(setMin, 0)}>Decrease</button>
+        </div>
+        <div className="sec">
+          <p>Seconds</p>
+          <button onClick={() => handleIncrement(setSec, 60)}>Increase</button>
+          <div style={{ textAlign: "center" }}>
+            <p>{`${sec < 10 ? "0" : ""}${sec}`}</p>
+          </div>
+          <button onClick={() => handleDecrement(setSec, 0)}>Decrease</button>
+        </div>
+      </div>
+
+      {stopTimer ? (
+        <button onClick={resetTimer} className="start-button">
+          Stop
+        </button>
+      ) : (
+        <button onClick={startTimer} className="start-button">
+          Start
+        </button>
+      )}
+
+      <CountdownCircleTimer
+        isPlaying={timerStarted}
+        duration={totalDuration}
+        colors={totalDuration === 0 ? ["#FF6A6A"] : ["#FF6A6A"]}
+        colorsTime={[totalDuration]}
+        key={timerKey}
+        onComplete={() => {
+          setTimerStarted(false);
+          setStopTimer(false);
+        }}
+      >
+        {({ remainingTime }) => {
+          const hoursRemaining = Math.floor(remainingTime / 3600);
+          const minutesRemaining = Math.floor((remainingTime % 3600) / 60);
+          const secondsRemaining = remainingTime % 60;
+          return (
+            <div>
+              {`${hoursRemaining < 10 ? "0" : ""}${hoursRemaining}:`}
+              {`${minutesRemaining < 10 ? "0" : ""}${minutesRemaining}:`}
+              {`${secondsRemaining < 10 ? "0" : ""}${secondsRemaining}`}
+            </div>
+          );
+        }}
+      </CountdownCircleTimer>
+    </>
+  );
+}

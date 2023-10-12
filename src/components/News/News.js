@@ -8,16 +8,15 @@ import wind from "../assets/wind.png";
 import line from "../assets/line.png";
 import newsImg from "../assets/newsimg.png";
 import axios from "axios";
-// import REACT_APP_API_KEY from ""
 
 const News = () => {
   const [cardTitle, setCardTitle] = useState([]);
   const [formData, setFormData] = useState([]);
   const [weatherData, setWeatherData] = useState([]);
+  const [newsData, setNewsData] = useState([]);
+  const [currentNewsIndex, setCurrentNewsIndex] = useState(0);
 
-  const API_KEY = process.env.REACT_APP_API_KEY;
-
-  const API_URL = `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=India`;
+  const WEATHER_API_URL = `http://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_API_KEY}&q=India`;
 
   useEffect(() => {
     const storedCardTitle = localStorage.getItem("MovieDetails");
@@ -33,6 +32,24 @@ const News = () => {
       const showFormData = JSON.parse(storedFromData);
       setFormData(showFormData);
     }
+  }, []);
+
+  const NEWS_API_URL = `https://newsapi.org/v2/top-headlines?country=in&category=general&apiKey=${process.env.REACT_APP_API_KEY_NEWS}`;
+
+  useEffect(() => {
+    axios
+      .get(NEWS_API_URL)
+      .then((res) => {
+        console.log(res);
+        setNewsData(res.data.articles);
+        const randomIndex = Math.floor(
+          Math.random() * res.data.articles.length
+        );
+        setCurrentNewsIndex(randomIndex);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -68,7 +85,7 @@ const News = () => {
                     <div className="first">
                       <div className="row">
                         <img src={rainy} alt="" />
-                        <p></p>
+                        <p>Heavy rain</p>
                       </div>
                       <div className="line">
                         <img src={line} alt="" />
@@ -109,7 +126,7 @@ const News = () => {
                 <div className="notes">
                   <p>All notes</p>
                   <div className="note-text">
-                    <textarea placeholder="write a note" />
+                    <textarea placeholder="Write a note!!" />
                   </div>
                 </div>
               </div>
@@ -117,22 +134,22 @@ const News = () => {
             <div className="bottom-profile"></div>
           </div>
           <div className="right-container">
-            <div className="news-image">
-              <img src={newsImg} alt="" />
-            </div>
-            <div className="news-title">
-              <p>Want to climb Mount Everest?</p>
-              <p>
-                <span>2-02-2023</span>
-                <span className="line">
-                  <img src={line} alt="" />
-                </span>
-                <span>03:33 PM</span>
-              </p>
-            </div>
-            <div className="news-content">
-              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum obcaecati molestias, eaque laborum ab voluptatem est non expedita, tempora, distinctio saepe ex hic labore assumenda quibusdam laudantium unde eligendi iusto dignissimos recusandae necessitatibus! Eligendi molestiae nobis unde alias maxime beatae, reprehenderit consequatur nostrum doloremque et numquam totam iure, id provident?</p>
-            </div>
+            {newsData.length > 0 && (
+              <>
+                <div className="news-image">
+                  <img src={newsData[currentNewsIndex].urlToImage} alt=""/>
+                  <div className="news-title">
+                    <p>{newsData[currentNewsIndex].title}</p>
+                    <p className="news-date">
+                      {newsData[currentNewsIndex].publishedAt}
+                    </p>
+                  </div>
+                </div>
+                <div className="news-content">
+                  <p>{newsData[currentNewsIndex].description}</p>
+                </div>
+              </>
+            )}
           </div>
         </div>
         <div className="bottom-container">
