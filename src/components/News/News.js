@@ -9,7 +9,7 @@ import line from "../assets/line.png";
 // import newsImg from "../assets/newsimg.png";
 import axios from "axios";
 import StopWatch from "./StopWatch";
-import {  NavLink, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 const News = () => {
   const navigate = useNavigate();
@@ -42,8 +42,8 @@ const News = () => {
     axios
     .get(NEWS_API_URL)
     .then((res) => {
-      // console.log(res);
       setNewsData(res.data.articles);
+      // console.log(res);
       const randomIndex = Math.floor(
         Math.random() * res.data.articles.length
       );
@@ -57,7 +57,7 @@ const News = () => {
     axios
       .get(WEATHER_API_URL)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setWeatherData(res.data);
       })
       .catch((err) => {
@@ -67,8 +67,7 @@ const News = () => {
   }, []);
   
 
-
-
+//for setting AM and PM in weather time
   const getTiming = () => {
     if (weatherData.current && weatherData.current.last_updated) {
       const lastUpdatedTime = new Date(weatherData.current.last_updated);
@@ -77,6 +76,11 @@ const News = () => {
     }
     return "";
   };
+
+
+  const handleBrowse=()=>{
+    navigate("/movie")
+  }
 
   return (
     <>
@@ -196,9 +200,9 @@ const News = () => {
           </div>
         </div>
         <div className="bottom-container">
-          <NavLink to={"movie"}>
-          <button>Browse</button>
-          </NavLink>
+          
+          <button onClick={handleBrowse}>Browse</button>
+       
         </div>
       </section>
     </>

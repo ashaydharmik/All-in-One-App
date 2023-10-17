@@ -22,15 +22,10 @@ const handleChange=(e)=>{
       [name]: value,
     });
   }
-  console.log(formData)
+  // console.log(formData)
 }
 
-// useEffect(()=>{
-//   console.log(error)
-//  if(Object.keys(error).length === 0 && isSubmit){
-//   console.log(formData)
-//  }
-// },[error,formData,isSubmit])
+
 
 const handleSubmit=(e)=>{
   e.preventDefault();
