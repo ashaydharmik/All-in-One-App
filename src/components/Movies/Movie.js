@@ -48,10 +48,10 @@ const Movie = () => {
 
   const MOVIE_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_API_KEY_MOVIES}`;
 
-  function getGenreId(genreName) {
+  const getGenreId = useCallback((genreName) => {
     const selectedGenre = genreInfo.find((genre) => genre.name === genreName);
     return selectedGenre ? selectedGenre.genreId : null;
-  }
+  })
   
   const handleLogo=()=>{
     navigate("/news")
@@ -82,7 +82,7 @@ const Movie = () => {
           console.log(err);
         });
     }
-  }, [MOVIE_URL, getGenreId]);
+  }, [MOVIE_URL]);
 
   return (
     <div className="movie-container">
