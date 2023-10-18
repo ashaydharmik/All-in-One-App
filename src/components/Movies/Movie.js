@@ -82,7 +82,7 @@ const Movie = () => {
           console.log(err);
         });
     }
-  }, []);
+  }, [MOVIE_URL, getGenreId]);
 
   return (
     <div className="movie-container">

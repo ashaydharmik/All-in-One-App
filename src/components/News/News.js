@@ -64,7 +64,7 @@ const News = () => {
         console.log(err);
       });
 
-  }, []);
+  }, [NEWS_API_URL, WEATHER_API_URL]);
   
 
 //for setting AM and PM in weather time
